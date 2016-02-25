@@ -12,8 +12,8 @@ class PQXX_PRIVATE transaction_tablereader : callgate<transaction_base>
 
   transaction_tablereader(reference x) : super(x) {}
 
-  void BeginCopyRead(const std::string &table, const std::string &columns)
-	{ home().BeginCopyRead(table, columns); }
+  void BeginCopyRead(const std::string &table, const std::string &columns, const std::string &query)
+       { home().BeginCopyRead(table, columns, query); }
 
   bool ReadCopyLine(std::string &line) { return home().ReadCopyLine(line); }
 };

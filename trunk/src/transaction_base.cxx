@@ -461,8 +461,12 @@ std::string MakeCopyString(
 
 
 void pqxx::transaction_base::BeginCopyRead(const std::string &Table,
-    const std::string &Columns)
+    const std::string &Columns, const std::string &Query)
 {
+  if(!Query.empty()){
+      exec("COPY (" + Query + ") TO STDOUT");
+      return;
+  }
   exec(MakeCopyString(Table, Columns) + "TO STDOUT");
 }
 

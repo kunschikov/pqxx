@@ -436,7 +436,7 @@ private:
   PQXX_PRIVATE void RegisterPendingError(const std::string &) PQXX_NOEXCEPT;
 
   friend class pqxx::internal::gate::transaction_tablereader;
-  PQXX_PRIVATE void BeginCopyRead(const std::string &, const std::string &);
+  PQXX_PRIVATE void BeginCopyRead(const std::string &, const std::string &, const std::string& = std::string());
   bool ReadCopyLine(std::string &);
 
   friend class pqxx::internal::gate::transaction_tablewriter;
