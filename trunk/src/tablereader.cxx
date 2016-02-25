@@ -36,23 +36,23 @@ pqxx::tablereader::tablereader(transaction_base &T,
 }
 
 pqxx::tablereader::tablereader(transaction_base &T,
-    const std::string &Name,
-    const std::string &Null,
-    const std::string &Query
+    const std::string &Query,
+    bool full_query
     ) :
-  namedclass("tablereader", Name),
-  tablestream(T, Null),
+  namedclass("tablereader", "COPY"),
+  tablestream(T, ""),
   m_Done(true)
 {
-  setup(T, Name, std::string(), Query);
+  gate::transaction_tablereader(T).BeginCopyRead(Query, full_query);
+  register_me();
+  m_Done = false;
 }
 
 void pqxx::tablereader::setup(transaction_base &T,
     const std::string &Name,
-    const std::string &Columns,
-    const std::string &Query)
+    const std::string &Columns)
 {
-  gate::transaction_tablereader(T).BeginCopyRead(Name, Columns, Query);
+  gate::transaction_tablereader(T).BeginCopyRead(Name, Columns);
   register_me();
   m_Done = false;
 }

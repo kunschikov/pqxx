@@ -460,14 +460,18 @@ std::string MakeCopyString(
 } // namespace
 
 
-void pqxx::transaction_base::BeginCopyRead(const std::string &Table,
-    const std::string &Columns, const std::string &Query)
+void pqxx::transaction_base::BeginCopyRead(const std::string &Table, const std::string &Columns)
 {
-  if(!Query.empty()){
-      exec("COPY (" + Query + ") TO STDOUT");
-      return;
-  }
   exec(MakeCopyString(Table, Columns) + "TO STDOUT");
+}
+
+void pqxx::transaction_base::BeginCopyRead(const std::string &Query, bool full_query)
+{
+     if(full_query){
+          exec(Query);
+          return;
+     }
+     exec("COPY (" + Query + ") TO STDOUT");
 }
 
 

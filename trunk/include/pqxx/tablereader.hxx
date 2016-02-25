@@ -35,9 +35,8 @@ public:
       const std::string &Name,
       const std::string &Null=std::string());
   tablereader(transaction_base &,
-       const std::string &Name,
-       const std::string &Null,
-       const std::string &Query);
+       const std::string &Query,
+       bool full_query);
   template<typename ITER>
   tablereader(transaction_base &,
       const std::string &Name,
@@ -59,8 +58,7 @@ public:
 private:
   void setup(transaction_base &T,
       const std::string &RName,
-      const std::string &Columns=std::string(),
-      const std::string &Query=std::string());
+      const std::string &Columns=std::string());
   PQXX_PRIVATE void reader_close();
   std::string extract_field(
 	const std::string &,
